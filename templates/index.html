@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Game</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to the Great Number Game</h1>
+        <h2>I am thinking of a number between 1 and 100</h2>
+        {% if session["intentos"] > 5 %}
+        <h2>You Loose! 5 attempts maximum. <br />Try again</h2>
+        <form action="/">
+            <input class="btnRestart" type="submit" value="Play again" />
+        </form>
+        {% else %} {% if session["result"] != "" %}
+        <div class="resultBx {{session['result']}}">
+            <h2>{{session["message"]}}</h2>
+            {% if session["result"] == "correct" %}
+            <h2>Save your score!</h2>
+            <form action="/saveScore" method="post">
+                <input type="text" name="name" id="name" />
+                <input class="btnRestart" type="submit" value="Save" />
+            </form>
+            {% endif %}
+        </div>
+        {% endif %}
+        <form action="/guess" method="post">
+            <h3>Take a guess!</h3>
+            <input type="number" name="guess" id="guess" placeholder="Number..." />
+            <input class="btnGuess" type="submit" value="Guess" />
+        </form>
+
+        {% endif %}
+    </div>
+</body>
+
+</html>
